@@ -1,0 +1,3 @@
+
+
+add_executable(rearrange_characters 01_a_quick_start/rearrange_characters.c)
