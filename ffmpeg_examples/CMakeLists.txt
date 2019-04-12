@@ -2,6 +2,7 @@
 set(FFMPEG_EXAMPLES
         metadata
         decode_video
+        encode_video
         )
 
 foreach(TEST ${FFMPEG_EXAMPLES})
