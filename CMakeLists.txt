@@ -16,3 +16,9 @@ add_subdirectory(sfml)
 
 # cpp官网学习
 add_subdirectory(cpp_reference)
+
+# 多媒体算法
+add_subdirectory(media_algorithms)
+
+# 多媒体协议实现
+add_subdirectory(media_spec_impl)

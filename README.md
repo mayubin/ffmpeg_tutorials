@@ -14,6 +14,7 @@
 ### 01 A Quick Start
 1. `rearrange_characters.c` 字符串的输入输出处理。
 
+
     
 
 ## FFmpeg安装
@@ -84,7 +85,7 @@ ffmpeg终端语法规则
 1. `metadata.c` 读取文件的元数据输出。  
 调用avformat_open_input函数构造AVFormatContext结构体，相当于Android中的Context角色，提供编解码过程中需要的各种资源。
 访问AVDictionary* AVFormatContext::metadata属性，通过while循环不断查询获取metadata的key和value值。
-2. `decode_video.c` 解码视频的前几帧，保存为灰度图片。 
+2. `decode_video.c` 解码视频的前几帧，保存为灰度图片。  
 构建AVFormatContext结构体，轮询视频文件中的流信息，使用查询到的视频流构建AVCodecContext。然后创建AVFrame和AVPacket，通过
 avcodec_send_packet函数将将视频数据送到AVPacket中，通过avcodec_receive_frame函数传递到AVFrame中，最终写入到文件。 
 3. `encode_video.c` MPEG4编码2秒钟的视频，可以使用播放器播放。  
@@ -93,9 +94,24 @@ avcodec_send_packet函数将将视频数据送到AVPacket中，通过avcodec_rec
 最终AVPacket写入到文件中。
     
 ## 音视频图像协议
+**注: 协议解读是html文件，需要下载下来使用浏览器打开。**  
+[Bootstrap Documentation](media_specifications/bootstrap_documentation.html)
+主要是Bootstrap的Layout, Content, Components, Utilities示例。  
+
+### PNG协议
 [Portable Network Graphics (PNG) Specification (Second Edition)](https://www.w3.org/TR/PNG/)  
 samples, channels, pixels, and sample depth之间的关系  
 ![Relationships between sample, sample depth, pixel, and channel](res/png_sample_channel_relationships.png)  
+
+编码流程PNG image -> Pass extraction -> Scanline serialization -> Filtering -> Compression -> Chunking -> 
+Datastream construction   
+
+PNG数据流由一系列的chunks构造，重要的四个
+- `IHDR` 文件头  
+- `PLTE` palette表
+- `IDAT` 数据chunks
+- `IEND` 文件结束  
+
 详细介绍查看网页[PNG协议解读](media_specifications/portable_network_graphics_specification.html)
 
 ## FFmpeg源码分析
@@ -103,6 +119,10 @@ samples, channels, pixels, and sample depth之间的关系
 ## C++语言进阶
 示例参考[cppreference官网](https://en.cppreference.com/w/)
 ### General utilities library
+#### Smart pointers and allocators 智能指针
+`unique_ptr_test.cpp` 通过make_unique创建对象，通过move进行对象的转移，只允许一个指针拥有该对象实例。  
+`shared_ptr_test.cpp` 多个指针可以指向同一个对象，对象的引用计数use_count增加。
+`weak_ptr_test.cpp` 不会引起use_count的增加。
 ### Containers library
 ### Algorithms library
 ### Thread support library
@@ -117,13 +137,21 @@ SFML的安装`sudo apt-get install libsfml-dev`
 
 
 # Advance topics:
+
 ## 算法复习
-Cyclic Redundancy Code
-## 图像算法
+
+### Cyclic Redundancy Code
+
+## 多媒体算法 (media_algorithms)
+
+### pngquant PNG压缩算法  (未完成)
+
 
 ## 软件架构基础
 
 ## 多媒体框架
+
+## Leetcode答案
 
 
 
