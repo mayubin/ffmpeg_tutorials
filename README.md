@@ -1,5 +1,5 @@
 # ffmpeg_tutorials
-学习FFmpeg系列教程(从最基础的C语法到编写实用的C++播放器)
+学习FFmpeg系列教程(从最基础的C语法->编写实用的C++播放器->前沿视频合成技术)
 
 使用的操作系统 Ubuntu 18.10  
 编译器 gcc (Ubuntu 8.2.0-7ubuntu1) 8.2.0  
@@ -92,6 +92,13 @@ avcodec_send_packet函数将将视频数据送到AVPacket中，通过avcodec_rec
 通过avcodec_find_encoder构造AVCodec，进而构造AVCodecContext，然后传入参数对AVCodecContext进行设置，比如视频编码格式，宽和高等。
 构建AVPacket和AVFrame结构体，向AVFrame中填充YUV数据，通过avcodec_send_frame和avcodec_receive_packet函数将数据传递到AVPacket中，
 最终AVPacket写入到文件中。
+4. `scaling_video.c` 通过sws_scale函数转换视频的尺寸。  
+将生成的的帧图片转换存入到另外的文件中。
+5. `filtering_video.c` 改变视频的尺寸和转置90度从终端输出。  
+和`decode_video.c`相同的处理获取Frame，然后通过avfilter_graph_create_filter构建两个filter，graph的意义还需要后续再分析，最后改变后的Frame从终端输出。
+6. `hw_decode.c` 硬件加速。  
+解码过程和`decode_video.c`类似，添加av_hwdevice_ctx_create函数创建AVBufferRef指针。
+
     
 ## 音视频图像协议
 **注: 协议解读是html文件，需要下载下来使用浏览器打开。**  
@@ -121,7 +128,7 @@ PNG数据流由一系列的chunks构造，重要的四个
 ### General utilities library
 #### Smart pointers and allocators 智能指针
 `unique_ptr_test.cpp` 通过make_unique创建对象，通过move进行对象的转移，只允许一个指针拥有该对象实例。  
-`shared_ptr_test.cpp` 多个指针可以指向同一个对象，对象的引用计数use_count增加。
+`shared_ptr_test.cpp` 多个指针可以指向同一个对象，对象的引用计数use_count增加。  
 `weak_ptr_test.cpp` 不会引起use_count的增加。
 ### Containers library
 ### Algorithms library
@@ -131,6 +138,12 @@ PNG数据流由一系列的chunks构造，重要的四个
 SFML的安装`sudo apt-get install libsfml-dev`  
 测试代码 `sfml/examples/SFMLTest.cpp`
 
+### System module
+### Window module
+### Graphics module
+### Audio module
+### Network module
+
 ## 流媒体
 
 ## 编写多媒体播放器
@@ -139,8 +152,21 @@ SFML的安装`sudo apt-get install libsfml-dev`
 # Advance topics:
 
 ## 算法复习
+以`Introduction to Algorithms`为蓝本学习算法。
+### Foundations
+### Sorting and Order Statistics
+### Data Structures
+### Advanced design and Analysis Techniques
+### Advanced Data Structures
+### Graph Algorithms
+### Select Topics
 
-### Cyclic Redundancy Code
+### CRC校验
+在需要传递的数据后面加上一串数据，这串数据是对需要传递的数据进行计算得到的，通过比较加上的数据验证传递的数据是否正确。  
+[crc实现](basic_algorithms/crc_impl)
+详细的解释查看  
+[A Painless Guide to CRC Error Detection Algorithms](http://ross.net/crc/download/crc_v3.txt)
+
 
 ## 多媒体算法 (media_algorithms)
 
@@ -148,10 +174,15 @@ SFML的安装`sudo apt-get install libsfml-dev`
 
 
 ## 软件架构基础
+### Design Patterns
 
 ## 多媒体框架
 
+## 图像处理和识别
+
 ## Leetcode答案
+
+
 
 
 

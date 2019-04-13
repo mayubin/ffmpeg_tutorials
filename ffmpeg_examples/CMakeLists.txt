@@ -3,6 +3,9 @@ set(FFMPEG_EXAMPLES
         metadata
         decode_video
         encode_video
+        scaling_video
+        filtering_video
+        hw_decode
         )
 
 foreach(TEST ${FFMPEG_EXAMPLES})

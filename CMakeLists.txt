@@ -22,3 +22,6 @@ add_subdirectory(media_algorithms)
 
 # 多媒体协议实现
 add_subdirectory(media_spec_impl)
+
+# 基础算法
+add_subdirectory(basic_algorithms)
