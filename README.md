@@ -1,5 +1,5 @@
 # ffmpeg_tutorials
-学习FFmpeg系列教程(从最基础的C语法->编写实用的C++播放器->前沿视频合成技术)
+学习多媒体系列教程(从最基础的C语法->编写实用的C++播放器->前沿音视频处理技术)
 
 使用的操作系统 Ubuntu 18.10  
 编译器 gcc (Ubuntu 8.2.0-7ubuntu1) 8.2.0  
@@ -12,7 +12,13 @@
 主要讲指针，内存管理，和文件读写操作。因为音视频很多都是以文件的形式存在，需要手动管理内存，指针又是必不可少的。
 参考《Pointers On C》写的部分代码示例。
 ### 01 A Quick Start
-1. `rearrange_characters.c` 字符串的输入输出处理。
+1. `rearrange_characters.c` 字符串的输入输出处理。  
+
+跳过语法，函数，数组，指针基础章节。  
+
+2. Structures and Unions
+  
+
 
 
     
