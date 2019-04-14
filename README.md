@@ -153,13 +153,26 @@ SFML的安装`sudo apt-get install libsfml-dev`
 ### Audio module
 ### Network module
 
+
+
+---
 ## 流媒体
+### RTMP
+### RTSP
+### RTP/RTCP
+### HLS
 
+---
 ## 编写多媒体播放器
+### mpvplayer
+### ijkplayer
 
 
-# Advance topics:
 
+# Advance topics
+
+
+---
 ## 算法复习
 以`Introduction to Algorithms`为蓝本学习算法。
 ### Foundations
@@ -177,15 +190,26 @@ SFML的安装`sudo apt-get install libsfml-dev`
 [A Painless Guide to CRC Error Detection Algorithms](http://ross.net/crc/download/crc_v3.txt)
 
 
+
+
+---
 ## 多媒体算法 (media_algorithms)
 
 ### pngquant PNG压缩算法  (未完成)
 
 
+
+
+
+---
 ## 软件架构基础
 ### Design Patterns
 
 
+
+
+
+---
 ## 多媒体框架
 ### VLC
 
@@ -193,22 +217,80 @@ SFML的安装`sudo apt-get install libsfml-dev`
 
 ### EXOPlayer
 
+
+
+
+
+---
 ## 图像处理和识别
-### Skia (工作使用)
+## Skia (工作使用)
 
-### OpenCV 
+## OpenCV 
+### Core functionality
+### Image Processing
+### Image file reading and writing
+### Video I/O
+### High-level GUI
+### Video Analysis
+### Camera Calibration and 3D Reconstruction
+### 2D Features Framework
+### Object Detection
+### Deep Neural Network module
+### Machine Learning
+### Clustering and Search in Multi-Demensional Spaces
+### Computational Photography
+### Image stitching
+### Graph API
 
+
+---
 ## Leetcode答案 (C++实现)
-[Leetcode官网](https://leetcode.com/problemset/all/)  
-答案在[leetcode](leetcode)文件夹。  
-|Two Sum            |Add Two Numbers    |Longest Substring  |Median of Two Sorted Arrays|Longest Palindromic Substring|
-|ZigZag Conversion  |Reverse Integer    |String to Integer  |Regular Expression Matching|Container With Most Water    |
+[Leetcode官网](https://leetcode.com/problemset/all/)  答案在[leetcode](leetcode)文件夹。  
+### Array
+### Hash Table
+### Linked List
+### Math 
+### Two Pointers
+### String
+### Binary Search
+### Divide and Conquer
+### Dynamic Programming
+### Backtracking
+### Stack
+### Heap
+### Greedy
+### Bit Manipulation
+### Tree
+### Depth-first Search
+### Breadth-first Search
+### Union Find
+### Design
+### Topological Sort
+### Trie
+### Binary Indexed Tree
+### Segment Tree
+### Binary Search Tree
+### Recursion
+### Brainteaser
+### Memoization
+### Queue
+### Minimax
+### Reservoir Sampling
+### Map
+### Geometry
+### Random
+### Rejection Sampling
+### Sliding Window
 
+
+
+
+---
 ## 3D
 
-### filament
+## filament
 
-### three.js
+## three.js
 
 
 
