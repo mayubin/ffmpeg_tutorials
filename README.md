@@ -103,6 +103,7 @@ avcodec_send_packet函数将将视频数据送到AVPacket中，通过avcodec_rec
 ## 音视频图像协议
 **注: 协议解读是html文件，需要下载下来使用浏览器打开。**  
 [Bootstrap Documentation](media_specifications/bootstrap_documentation.html)
+很fashion的前端库，方便写html网页。
 主要是Bootstrap的Layout, Content, Components, Utilities示例。  
 
 ### PNG协议
@@ -120,6 +121,14 @@ PNG数据流由一系列的chunks构造，重要的四个
 - `IEND` 文件结束  
 
 详细介绍查看网页[PNG协议解读](media_specifications/portable_network_graphics_specification.html)
+
+### AAC
+
+### FLAC
+
+### H264
+
+
 
 ## FFmpeg源码分析
 
@@ -176,14 +185,29 @@ SFML的安装`sudo apt-get install libsfml-dev`
 ## 软件架构基础
 ### Design Patterns
 
+
 ## 多媒体框架
+### VLC
+
+### NuPlayer
+
+### EXOPlayer
 
 ## 图像处理和识别
+### Skia (工作使用)
 
-## Leetcode答案
+### OpenCV 
+
+## Leetcode答案 (C++实现)
+[Leetcode官网](https://leetcode.com/problemset/all/)  
+每天至少刷一道习题。
 
 
+## 3D
 
+### filament
+
+### three.js
 
 
 
