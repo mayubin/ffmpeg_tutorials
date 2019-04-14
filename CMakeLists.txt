@@ -25,3 +25,6 @@ add_subdirectory(media_spec_impl)
 
 # 基础算法
 add_subdirectory(basic_algorithms)
+
+# leetcode
+add_subdirectory(leetcode)

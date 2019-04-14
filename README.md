@@ -200,8 +200,9 @@ SFML的安装`sudo apt-get install libsfml-dev`
 
 ## Leetcode答案 (C++实现)
 [Leetcode官网](https://leetcode.com/problemset/all/)  
-每天至少刷一道习题。
-
+答案在[leetcode](leetcode)文件夹。  
+|Two Sum            |Add Two Numbers    |Longest Substring  |Median of Two Sorted Arrays|Longest Palindromic Substring|
+|ZigZag Conversion  |Reverse Integer    |String to Integer  |Regular Expression Matching|Container With Most Water    |
 
 ## 3D
 
