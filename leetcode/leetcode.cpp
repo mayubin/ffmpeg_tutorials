@@ -16,6 +16,26 @@ struct ListNode {
 };
 
 
+// 0004
+
+
+// 0003
+int lengthOfLongestSubstring(string s) {
+    // ASCII char sequence，最长256个字符。
+    vector<int> dest(256, -1);
+    int longest = 0, start = 0;
+
+    for (int i = 0; i < s.length(); i++) {
+        // 如果数组中存在当前字符，就把当前的下标值赋值给start变量。
+        start = max(dest[s[i]] + 1, start);
+        // 将当前的下标值存入到数组中。
+        dest[s[i]] = i;
+        // 缓存最大值的计算结果。
+        longest = max(longest, i - start + 1);
+    }
+
+    return longest;
+}
 
 // 0002
 ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
