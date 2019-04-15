@@ -34,20 +34,21 @@
 
 ## FFmpeg概述
 主要库文件  
-libavcodec encoding/decoding library  
-libavfilter graph-based frame editing library  
-libavformat I/O and muxing/demuxing library  
-libavdevice special devices muxing/demuxing library  
-libavutil common utility library  
-libswresample audio resampling, format conversion and mixing  
-libpostproc post processing library  
-libswscale color conversion and scaling library  
+`libavcodec` encoding/decoding library  
+`libavfilter` graph-based frame editing library  
+`libavformat` I/O and muxing/demuxing library  
+`libavdevice` special devices muxing/demuxing library  
+`libavutil` common utility library  
+`libswresample` audio resampling, format conversion and mixing  
+`libpostproc` post processing library  
+`libswscale` color conversion and scaling library  
 ![Transcoding in ffmpeg](res/diagram_ffmpeg.png)    
 牢记上面这张图，接下来的部分都会围绕这张图展开，其中很重要的几个概念，Demuxer, Muxer, Packet, Frame, Decoder, Encoder，后续后详
 细介绍。先介绍命令行的使用，然后开始编写代码，需要的资源文件在res/目录下面。
 
     
 ## FFmpeg命令行使用
+主要熟悉FFmpeg的功能
 ### 01. FFmpeg Fundamentals
 ffmpeg终端语法规则  
 `ffmpeg [global options] [input file options] -i input_file [output file options] output_file`  
@@ -60,29 +61,140 @@ ffmpeg终端语法规则
 -vf表示video filters, -af表示audio filters.
 
 ### 02. Displaying Help and Features
+ffmpeg -h decoder=flv  
+ffmpeg -codecs  
+ffmpeg -filters  
+ffmpeg -formats  
+ffmpeg -protocols
+  
 ### 03. Bit Rate, Frame Rate and File Size
+ffmpeg -i input.avi -r 30 output.mp4
+指定帧率
+
+video_size = video_bitrate * time_in_seconds / 8  
+audio_size = sampling_rate * bit_depth * channels * time_in_seconds / 8
+
 ### 04. Resizing and Scaling Video
-### 05. Cropping Video
-### 06. Padding Video
+ffmpeg -i input.avi -s vga output.avi  
+指定播放尺寸 640x480  
+
+ffmpeg -i input.mpg -vf scale=iw*0.9:ih*0.9 output.mp4
+
+### 05. Cropping Video (视频裁剪)
+ffmpeg -f lavfi -i testsrc -vf crop=29:52:256:94 -t 10 timer1.mpg  
+相对左上原点的距离加上输出视频的长和宽。
+
+### 06. Padding Video (增加额外的区域)
+ffmpeg -i input -vf pad=iw:iw*3/4:0:(oh-ih)/2:color output  
+将视频从16:9转化为4:3
+
 ### 07. Flipping and Rotating Video
+ffplay -f lavfi -i rgbtestsrc -vf vflip  
+视频转置
+
+ffmpeg -i CMYK.avi -vf transpose=1 CMYK_transposed.avi
+顺时针转90度
+
 ### 08. Blur, Sharpen and Other Denoising
+ffmpeg -i halftone.jpg -vf smartblur=5:0.8:0 blurred_halftone.png
+模糊处理
+
+ffmpeg -i input.mpg -vf mp=denoise3d output.webm  
+锐化
+
 ### 09. Overlay-Picture in Picture
+ffmpeg -i pair.mp4 -i logo.png -filter_complex overlay=W-w:H-h pair3.mp4  
+覆盖，图片显示在右下角。
+
 ### 10. Adding Text on Video
+添加文字
+
 ### 11. Conversion Between Formats
+常见转换关系图  
+![Media formats and codecs in conversion](res/media_formats_conversion.png)
+
 ### 12. Time Operations
-### 13. Mathematical Functions
+ffmpeg -i input.avi -ss 10 output.mp4  
+设置开始时间
+
+### 13. Mathematical Functions  
+ffplay -f lavfi -i aevalsrc=cos(523.251*2*PI*t)  
+余弦函数
+
 ### 14. Metadata and Subtitles
+元数据通过-metadata指定
+
+ffmpeg -i video.avi -vf subtitles=titles.srt video.mp4
+
 ### 15. Image Processing
+ffmpeg -i videoclip.avi -ss 01:23:45 image.jpg  
+截取视频帧保存为图片
+
+ffmpeg -i image.png -vf transpose=1 image_rotated.png
+
+ffmpeg -f image2 -i img%d.jpg -r 25 video.mp4  
+从图片中合成视频
+
 ### 16. Digital Audio
+ffmpeg -f lavfi -i aevalsrc=sin\(440*2*PI*t\) -t 10 noteA4.mp4  
+声音合成
+
+ffmpeg -i stereo.wav -af pan=mono mono.wav  
+双声道变成单声道
+
+ffmpeg -i music.mp3 -af earwax -q 1 music_headphones.mp3  
+增强耳机效果
+
 ### 17. Presets for Codecs
+使用预置文件
+vcodec=libx264  
+vprofile=baseline  
+level=13  
+maxrate=768000
+bufsize=3000000
+
 ### 18. Interlaced Video
+扫描方式
+
 ### 19. FFmpeg Components and Projects
+FFplay FFprobe FFmpeg  
+libavcodec libavdevice libavfilter libavformat libavutil libpostproc libswresample libswscale
+  
 ### 20. Microphone and Webcam
+音视频录制
+
 ### 21. Batch Files
+Bash
+
 ### 22. Color Corrections
+ffplay -f lavfi -i smptebars -vf lutyuv=u=128:v=128  
+黑白
+
+ffplay -f lavfi -i rgbtestsrc -vf lutrgb=r=0:g=0  
+过滤红色和绿色
+
+yuv格式
+
 ### 23. Advanced Techniques
-### 24. Video on Web
-### 25. Debugging and Tests
+音视频连接  
+concatenation merge(相对于音频流) mix(相对于channel) multiplex overlay
+
+ffmpeg -i input1.avi -i input2.avi -filter_complex concat output.mp4
+
+ffmpeg -i eagles.mpg -vf delogo=x=730:y=0:w=70:h=46:t=1 nologo.mpg  
+移除logo
+
+ffmpeg -i travel.avi -vf deshake fixed_travel.avi  
+消除抖动
+
+ffmpeg -i ship.avi -vf drawbox=x=150:w=600:h=400:c=yellow ship1.avi  
+增加颜色框
+
+ffmpeg -i audio.mp3 -vf showspectrum audio_spectrum.mp4  
+音频光谱
+
+[Festival Speech Synthesis System](http://festvox.org/festival/)  
+语音合成引擎
 
 ## 音视频基本概念
 

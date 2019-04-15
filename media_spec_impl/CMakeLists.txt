@@ -1,5 +1,5 @@
 find_package(PNG REQUIRED)
 
 
-add_executable(pngtest libpng/pngtest.c)
-target_link_libraries(pngtest ${PNG_LIBRARY})
+add_executable(png_to_png libpng/png_to_png.c)
+target_link_libraries(png_to_png ${PNG_LIBRARY})
