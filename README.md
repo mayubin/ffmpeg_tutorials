@@ -240,6 +240,15 @@ PNG数据流由一系列的chunks构造，重要的四个
 
 详细介绍查看网页[PNG协议解读](media_specifications/portable_network_graphics_specification.html)
 
+
+### WebP
+编译  
+`make -f makefile.unix`  
+`./autogen.sh`  
+`./configure --enable-everything`  
+`make`  
+`sudo make install`  
+
 ### AAC
 
 ### FLAC

@@ -29,4 +29,4 @@ add_subdirectory(basic_algorithms)
 # leetcode
 add_subdirectory(leetcode)
 
-add_subdirectory(image_proc_version)
+add_subdirectory(image_proc_vision)
