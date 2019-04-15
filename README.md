@@ -11,12 +11,17 @@
 ## C语言进阶
 主要讲指针，内存管理，和文件读写操作。因为音视频很多都是以文件的形式存在，需要手动管理内存，指针又是必不可少的。
 参考《Pointers On C》写的部分代码示例。
-### 01 A Quick Start
-1. `rearrange_characters.c` 字符串的输入输出处理。  
+### 01. A Quick Start
+`rearrange_characters.c` 字符串的输入输出处理。  
 
-跳过语法，函数，数组，指针基础章节。  
+**跳过语法，函数，数组，指针基础章节。**  
 
-2. Structures and Unions
+### 02. Structures and Unions
+主要讲结构体，初始化，和结构体指针。
+
+### 03. Dynamic Memory Allocation
+分配`void* malloc(size_t size);`  
+释放`void free(void *pointer);`
   
 
 
@@ -241,7 +246,7 @@ PNG数据流由一系列的chunks构造，重要的四个
 详细介绍查看网页[PNG协议解读](media_specifications/portable_network_graphics_specification.html)
 
 
-### WebP
+### [WebP](https://chromium.googlesource.com/webm/libwebp/)协议  
 编译  
 `make -f makefile.unix`  
 `./autogen.sh`  

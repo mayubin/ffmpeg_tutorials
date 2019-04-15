@@ -17,7 +17,12 @@ struct ListNode {
 
 
 // 0004
+double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+    int m = nums1.size();
+    int n = nums2.size();
 
+
+}
 
 // 0003
 int lengthOfLongestSubstring(string s) {

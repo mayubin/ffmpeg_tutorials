@@ -149,5 +149,38 @@ int main(int argc, char *argv[]) {
 }
 
 // Structure as Function Arguments
+#define PRODUCT_SIZE 20
+
+typedef struct {
+    char        product[PRODUCT_SIZE];
+    int         quantity;
+    float       unit_price;
+    float       total_amount;
+} Transaction;
+
+void compute_total_amount(register Transaction *trans) {
+    trans->total_amount =
+            trans->quantity * trans->unit_price;
+}
+
+struct DISK_REGISTER_FORMAT {
+    unsigned command                : 5;
+    unsigned sector                 : 5;
+    unsigned track                  : 9;
+    unsigned error_code             : 8;
+    unsigned head_loaded            : 1;
+    unsigned write_protect          : 1;
+    unsigned disk_spinning          : 1;
+    unsigned error_occurred         : 1;
+    unsigned ready                  : 1;
+};
+
+union {
+    int     a;
+    float   b;
+    char    c[4];
+} x = {5};
+
+
 
 
