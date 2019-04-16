@@ -1,6 +1,7 @@
 # ffmpeg_tutorials
 学习多媒体系列教程(从最基础的C语法->编写实用的C++播放器->前沿音视频处理技术)
 
+
 使用的操作系统 Ubuntu 18.10  
 编译器 gcc (Ubuntu 8.2.0-7ubuntu1) 8.2.0  
 集成开发环境 CLion 2018.3.4  
@@ -8,13 +9,15 @@
   
 邮件讨论  wangrl2016@gmail.com
 
+多运动，不要熬夜，保持好习惯。
+
 ## C语言进阶
 主要讲指针，内存管理，和文件读写操作。因为音视频很多都是以文件的形式存在，需要手动管理内存，指针又是必不可少的。
 参考《Pointers On C》写的部分代码示例。
 ### 01. A Quick Start
 `rearrange_characters.c` 字符串的输入输出处理。  
 
-**跳过语法，函数，数组，指针基础章节。**  
+跳过语法，函数，数组，指针基础章节。  
 
 ### 02. Structures and Unions
 主要讲结构体，初始化，和结构体指针。
@@ -221,7 +224,8 @@ avcodec_send_packet函数将将视频数据送到AVPacket中，通过avcodec_rec
 和`decode_video.c`相同的处理获取Frame，然后通过avfilter_graph_create_filter构建两个filter，graph的意义还需要后续再分析，最后改变后的Frame从终端输出。
 6. `hw_decode.c` 硬件加速。  
 解码过程和`decode_video.c`类似，添加av_hwdevice_ctx_create函数创建AVBufferRef指针。
-
+7. `demuxing.c` 一种视频格式转换为另外一种视频格式。
+通过输入输出文件的后缀创建相应的Context，转换对应的packet，最终写入到输出文件中。
     
 ## 音视频图像协议
 **注: 协议解读是html文件，需要下载下来使用浏览器打开。**  
@@ -254,6 +258,8 @@ PNG数据流由一系列的chunks构造，重要的四个
 `make`  
 `sudo make install`  
 
+后续写实现
+
 ### AAC
 
 ### FLAC
@@ -270,7 +276,9 @@ PNG数据流由一系列的chunks构造，重要的四个
 #### Smart pointers and allocators 智能指针
 `unique_ptr_test.cpp` 通过make_unique创建对象，通过move进行对象的转移，只允许一个指针拥有该对象实例。  
 `shared_ptr_test.cpp` 多个指针可以指向同一个对象，对象的引用计数use_count增加。  
-`weak_ptr_test.cpp` 不会引起use_count的增加。
+`weak_ptr_test.cpp` 不会引起use_count的增加。  
+`allocator_test.cpp` 分配内存
+
 ### Containers library
 ### Algorithms library
 ### Thread support library
@@ -306,7 +314,8 @@ SFML的安装`sudo apt-get install libsfml-dev`
 
 ---
 ## 算法复习
-以`Introduction to Algorithms`为蓝本学习算法。
+以`Introduction to Algorithms`为蓝本学习算法。  
+[算法笔记](basic_algorithms/introducation_to_algorithms.md)，代码也在对应文件夹。
 ### Foundations
 ### Sorting and Order Statistics
 ### Data Structures
@@ -315,17 +324,18 @@ SFML的安装`sudo apt-get install libsfml-dev`
 ### Graph Algorithms
 ### Select Topics
 
-### CRC校验
-在需要传递的数据后面加上一串数据，这串数据是对需要传递的数据进行计算得到的，通过比较加上的数据验证传递的数据是否正确。  
-[crc实现](basic_algorithms/crc_impl)
-详细的解释查看  
-[A Painless Guide to CRC Error Detection Algorithms](http://ross.net/crc/download/crc_v3.txt)
+
 
 
 
 
 ---
 ## 多媒体算法 (media_algorithms)
+### CRC校验
+在需要传递的数据后面加上一串数据，这串数据是对需要传递的数据进行计算得到的，通过比较加上的数据验证传递的数据是否正确。  
+[crc实现](basic_algorithms/crc_impl)
+详细的解释查看  
+[A Painless Guide to CRC Error Detection Algorithms](http://ross.net/crc/download/crc_v3.txt)
 
 ### pngquant PNG压缩算法  (未完成)
 

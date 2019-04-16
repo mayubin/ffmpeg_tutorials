@@ -5,6 +5,8 @@
 #include <stdio.h>
 #include <memory.h>
 #include "webp/decode.h"
+#include "webp/mux_types.h"
+#include "imageio/imageio_util.h"
 
 
 typedef enum {
@@ -50,6 +52,23 @@ typedef struct WebPInfo {
     int parse_bitstream_;
 } WebPInfo;
 
+static void WebPInfoInit(WebPInfo * const webp_info) {
+    memset(webp_info, 0, sizeof(*webp_info));
+}
+
+static int ReadFileToWebPData(const char *const filename,
+        WebPData *const webp_data) {
+    const uint8_t *data;
+    size_t size;
+
+    if (!ImgIoUtilReadFile(filename, &data, &size))
+        return 0;
+    webp_data->bytes = data;
+    webp_data->size = size;
+
+    return 1;
+}
+
 static void HelpShort(void) {
     printf("Usage: webpinfo [options] in_files\n"
            "Try -longhelp for an exhaustive list of options.\n");
@@ -65,6 +84,12 @@ static void HelpLong(void) {
            "  -diag .............. Show parsing error diagnosis.\n"
            "  -summary ........... Show chunk stats summary.\n"
            "  -bitstream_info .... Parse bitstream header.\n");
+}
+
+// WebP格式分析相关函数
+static WebPInfoStatus AnalyzeWebP(WebPInfo *const webp_info,
+        const WebPData *webp_data) {
+
 }
 
 int main(int argc, const char *argv[]) {
@@ -105,4 +130,33 @@ int main(int argc, const char *argv[]) {
             break;
         }
     }
+
+    if (c == argc) {
+        HelpShort();
+        return WEBP_INFO_INVALID_COMMAND;
+    }
+
+    // Process input files one by one.
+    for (; c < argc; ++c) {
+        WebPData webp_data;
+        const char *in_file = NULL;
+        WebPInfoInit(&webp_info);
+        webp_info.quiet_ = quiet;
+        webp_info.show_diagnosis_ = show_diag;
+        webp_info.show_summary_ = show_summary;
+        webp_info.parse_bitstream_ = parse_bitstream;
+
+        in_file = argv[c];
+        if (in_file == NULL ||
+                !ReadFileToWebPData((const char *)in_file, &webp_data)) {
+            webp_info_status = WEBP_INFO_INVALID_COMMAND;
+            fprintf(stderr, "Failed to open input file %s.\n", in_file);
+            continue;
+        }
+        if (!webp_info.quiet_)
+            printf("File: %s\n", in_file);
+        webp_info_status = AnalyzeWebP(&webp_info, &webp_data);
+        WebPDataClear(&webp_data);
+    }
+    return webp_info_status;
 }

@@ -16,29 +16,37 @@
     <li class="text-primary">Two Sum</li>
     <p>Given an array of integers, return indices of the two numbers such that they add up to a specific target.<br>
         You may assume that each input would have exactly one solution, and you may not use the same element twice.</p>
-    <pre><code>vector&lt;int&gt; twoSum(vector&lt;int&gt;& nums, int target)</code></pre>
+    <pre><code>vector&lt;int&gt; twoSum(vector&lt;int&gt;& nums, int target);</code></pre>
     <p>for循环遍历vector, 如果map中存在对应的值，则返回该value值和当前遍历的下标值，如果不存在就把值和下标存入map中。</p>
 
 
     <li class="text-secondary">Add Two Numbers</li>
     <p>You are given two non-empty linked lists representing two non-negative integers. The digits are stored in
         reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.</p>
-    <pre><code>ListNode* addTwoNumbers(ListNode* l1, ListNode* l2)</code></pre>
+    <pre><code>ListNode* addTwoNumbers(ListNode* l1, ListNode* l2);</code></pre>
     <p>保持进位，两个链表相加，使用其中一个链表进行存储。</p>
 
     <li class="text-success">Longest Substring Without Repeating Characters</li>
     <p>Given a string, find the length of the longest substring without repeating characters.</p>
-    <pre><code>int lengthOfLongestSubstring(string s)</code></pre>
+    <pre><code>int lengthOfLongestSubstring(string s);</code></pre>
     <p>动态规划(Dynamic programming)，通过数组保存字符和下标值，缓存计算的中间值，不断递进，通过比较返回最终结果。</p>
 
     <li class="text-danger">Median of Two Sorted Arrays</li>
     <p>There are two sorted arrays nums1 and nums2 of size m and n respectively. <br>
         Find the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).</p>
-    <pre><code>double findMedianSortedArrays(vector&lt;int&gt;& nums1, vector&lt;int&gt;& nums2)</code></pre>
+    <pre><code>double findMedianSortedArrays(vector&lt;int&gt;& nums1, vector&lt;int&gt;& nums2);</code></pre>
 
 
     <li class="text-warning">Longest Palindromic Substring</li>
+    <p>Given a string s, find the longest palindromic substring in s. You may assume that the maximum length of s is 1000.</p>
+    <pre><code>string longestPalindrome(string s);</code></pre>
+    <p>依次向左右拓展，比较是否相等，注意处理相同字符的情况。</p>
+
     <li class="text-info">ZigZag Conversion</li>
+    <p>The string "PAYPALISHIRING" is written in a zigzag pattern on a given number of rows like this: (you may want
+        to display this pattern in a fixed font for better legibility)</p>
+    <pre><code>string convert(string s, int numRows);</code></pre>
+    <p>每一行都会有有两个周期交替出现，每行都会走完一次字符串长度。</p>
     <li class="text-dark">Reverse Integer</li>
 </ol>
 

@@ -6,6 +6,7 @@ set(FFMPEG_EXAMPLES
         scaling_video
         filtering_video
         hw_decode
+        remuxing
         )
 
 foreach(TEST ${FFMPEG_EXAMPLES})

@@ -15,8 +15,70 @@ struct ListNode {
     }
 };
 
+// 0006
+string convert(string s, int numRows) {
+    string result = "";
+    if (numRows == 1)
+        return s;
 
-// 0004
+    int step1, step2, len = s.size();
+    for (int i = 0; i < numRows; ++i) {
+
+        // 每步之间的间隔
+        step1 = (numRows - i - 1) * 2;
+        step2 = i * 2;
+
+        int pos = i;
+        if (pos < len)
+            result += s.at(pos);
+        while (true) {
+            pos += step1;
+            if (pos >= len)
+                break;
+            if (step1)
+                result += s.at(pos);
+
+            pos += step2;
+            if (pos >= len)
+                break;
+            if (step2)
+                result += s.at(pos);
+        }
+    }
+    return result;
+}
+
+// 0005
+string longestPalindrome(string s) {
+    if (s.size() < 2)
+        return s;
+
+    int max_len = 0;
+    int start_idx = 0;
+
+    int i = 0;
+    while (i < s.size()) {
+        int r_ptr = i;
+        int l_ptr = i;
+        // find the middle of a palindrome
+        // 相同的字符肯定是对称形式的，所以不用检查依次跳过。
+        while (r_ptr < s.size() - 1 && s[r_ptr] == s[r_ptr + 1]) r_ptr++;
+        i = r_ptr + 1;
+        // expand from the middle out
+        while (r_ptr < s.size() - 1 && l_ptr > 0 && s[r_ptr + 1] == s[l_ptr - 1]) {
+            r_ptr++;
+            l_ptr--;
+        }
+        int new_len = r_ptr - l_ptr + 1;
+        if (new_len > max_len) {
+            start_idx = l_ptr;
+            max_len = new_len;
+        }
+    }
+    return s.substr(start_idx, max_len);
+}
+
+// 0004    hard
 double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
     int m = nums1.size();
     int n = nums2.size();
