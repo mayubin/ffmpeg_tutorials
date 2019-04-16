@@ -30,3 +30,6 @@ add_subdirectory(basic_algorithms)
 add_subdirectory(leetcode)
 
 add_subdirectory(image_proc_vision)
+
+# 2D图形库
+add_subdirectory(skia)
