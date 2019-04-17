@@ -272,12 +272,16 @@ PNG数据流由一系列的chunks构造，重要的四个
 
 ## C++语言进阶
 示例参考[cppreference官网](https://en.cppreference.com/w/)
+构造器
 ### General utilities library
 #### Smart pointers and allocators 智能指针
 `unique_ptr_test.cpp` 通过make_unique创建对象，通过move进行对象的转移，只允许一个指针拥有该对象实例。  
 `shared_ptr_test.cpp` 多个指针可以指向同一个对象，对象的引用计数use_count增加。  
 `weak_ptr_test.cpp` 不会引起use_count的增加。  
-`allocator_test.cpp` 分配内存
+`allocator_test.cpp` 分配内存  
+`lvalue_rvalue_test.cpp` 左值引用和右值引用  
+右值引用延长临时变量的生命周期，可以简单地理解为左值可以取地址，右值不能取地址。
+https://www.cnblogs.com/qicosmos/p/4283455.html
 
 ### Containers library
 ### Algorithms library
@@ -345,7 +349,12 @@ SFML的安装`sudo apt-get install libsfml-dev`
 
 ---
 ## 软件架构基础
-### Design Patterns
+
+## Design Patterns
+将[java-design-patterns](https://github.com/iluwatar/java-design-patterns)改写成C++的实现方式。  
+具体的分析在[soft_framework/design_patterns](soft_framework/design_patterns/design_patterns.md)目录。   
+### abstract document
+
 
 
 
@@ -366,6 +375,7 @@ SFML的安装`sudo apt-get install libsfml-dev`
 ---
 ## 图像处理和识别
 ## Skia (工作使用)
+使用CMakeLists.txt进行重写。  
 
 ## OpenCV 
 ### Core functionality

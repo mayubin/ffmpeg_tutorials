@@ -7,6 +7,8 @@ set(FFMPEG_EXAMPLES
         filtering_video
         hw_decode
         remuxing
+        animate_webp_encoder
+        transcoding
         )
 
 foreach(TEST ${FFMPEG_EXAMPLES})

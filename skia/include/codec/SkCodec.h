@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include "private/SkNoncopyable.h"
+
 class SkColorSpace;
 class SkData;
 class SkFrameHolder;
