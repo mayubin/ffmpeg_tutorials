@@ -20,6 +20,7 @@ typedef struct FilteringContext {
     AVFilterContext *buffersrc_ctx;
     AVFilterGraph *filter_graph;
 } FilteringContext;
+static FilteringContext *filter_ctx;
 
 typedef struct StreamContext {
     AVCodecContext *dec_ctx;
@@ -104,9 +105,97 @@ static int open_output_file(const char *filename) {
     for (i = 0; i < ifmt_ctx->nb_streams; i++) {
         out_stream = avformat_new_stream(ofmt_ctx, NULL);
         if (!out_stream) {
+            av_log(NULL, AV_LOG_ERROR, "Failed allocating output stream\n");
+            return AVERROR_UNKNOWN;
+        }
 
+        in_stream = ifmt_ctx->streams[i];
+        dec_ctx = stream_ctx[i].dec_ctx;
+
+        if (dec_ctx->codec_type == AVMEDIA_TYPE_VIDEO ||
+                dec_ctx->codec_type == AVMEDIA_TYPE_AUDIO) {
+            /* in this example, we choose transcoding to same codec */
+            encoder = avcodec_find_encoder(dec_ctx->codec_id);
+            if (!encoder) {
+                av_log(NULL, AV_LOG_FATAL, "Necessary encoder not found\n");
+                return AVERROR_INVALIDDATA;
+            }
+            enc_ctx = avcodec_alloc_context3(encoder);
+            if (!enc_ctx) {
+                av_log(NULL, AV_LOG_FATAL, "Failed to allocate the encoder context\n");
+                return AVERROR(ENOMEM);
+            }
+
+            /* In this example, we transcode to same properties (picture size,
+             * sample rate etc.). These properties can be changed for output
+             * streams easily using filters */
+            if (dec_ctx->codec_type == AVMEDIA_TYPE_VIDEO) {
+                enc_ctx->height = dec_ctx->height;
+                enc_ctx->width = dec_ctx->width;
+                enc_ctx->sample_aspect_ratio = dec_ctx->sample_aspect_ratio;
+                /* take first format from list of supported formats */
+                if (encoder->pix_fmts)
+                    enc_ctx->pix_fmt = encoder->pix_fmts[0];
+                else
+                    enc_ctx->pix_fmt = dec_ctx->pix_fmt;
+                /* video time_base can be set to whatever is handy and supported by encoder */
+                // 返回倒数
+                enc_ctx->time_base = av_inv_q(dec_ctx->framerate);
+            } else {
+                enc_ctx->sample_rate = dec_ctx->sample_rate;
+                enc_ctx->channel_layout = dec_ctx->channel_layout;
+                enc_ctx->channels = av_get_channel_layout_nb_channels(enc_ctx->channel_layout);
+                /* take first format from list of supported formats */
+                enc_ctx->sample_fmt = encoder->sample_fmts[0];
+                enc_ctx->time_base = (AVRational){1, enc_ctx->sample_rate};
+            }
+            if (ofmt_ctx->oformat->flags & AVFMT_GLOBALHEADER)
+                enc_ctx->flags |= AV_CODEC_FLAG_GLOBAL_HEADER;
+
+            /* Third parameter can be used to pass setting to encoder */
+            ret = avcodec_open2(enc_ctx, encoder, NULL);
+            if (ret < 0) {
+                av_log(NULL, AV_LOG_ERROR, "Cannot open video encoder for stream #%u\n", i);
+                return ret;
+            }
+            ret = avcodec_parameters_from_context(out_stream->codecpar, enc_ctx);
+            if (ret < 0) {
+                av_log(NULL, AV_LOG_ERROR, "Failed to copy encoder parameters to output stream #%u\n", i);
+                return ret;
+            }
+            out_stream->time_base = enc_ctx->time_base;
+            stream_ctx[i].enc_ctx = enc_ctx;
+        } else if (dec_ctx->codec_type == AVMEDIA_TYPE_UNKNOWN) {
+            av_log(NULL, AV_LOG_FATAL, "Elementary stream #%d is of unknown type, cannot proceed\n", i);
+            return AVERROR_INVALIDDATA;
+        } else {
+            /* if this stream must be remuxed */
+            ret = avcodec_parameters_copy(out_stream->codecpar, in_stream->codecpar);
+            if (ret < 0) {
+                av_log(NULL, AV_LOG_ERROR, "Copying parameters for stream #%u failed\n", i);
+                return ret;
+            }
+            out_stream->time_base = in_stream->time_base;
         }
     }
+    av_dump_format(ofmt_ctx, 0, filename, 1);
+
+    if (!(ofmt_ctx->oformat->flags & AVFMT_NOFILE)) {
+        ret = avio_open(&ofmt_ctx->pb, filename, AVIO_FLAG_WRITE);
+        if (ret < 0) {
+            av_log(NULL, AV_LOG_ERROR, "Could not open output file '%s'", filename);
+            return ret;
+        }
+    }
+
+    /* init muxer, write output file header */
+    ret = avformat_write_header(ofmt_ctx, NULL);
+    if (ret < 0) {
+        av_log(NULL, AV_LOG_ERROR, "Error occurred when opening output file\n");
+        return ret;
+    }
+
+    return 0;
 }
 
 static int init_filter(FilteringContext *fctx, AVCodecContext *dec_ctx,
@@ -115,7 +204,45 @@ static int init_filter(FilteringContext *fctx, AVCodecContext *dec_ctx,
 }
 
 static int init_filters(void) {
+    const char *filter_spec;
+    unsigned int i;
+    int ret;
+    filter_ctx = av_malloc_array(ifmt_ctx->nb_streams, sizeof(*filter_ctx));
+    if (!filter_ctx)
+        return AVERROR(ENOMEM);
 
+    for (i = 0; i < ifmt_ctx->nb_streams; i++) {
+        filter_ctx[i].buffersrc_ctx = NULL;
+        filter_ctx[i].buffersink_ctx = NULL;
+        filter_ctx[i].filter_graph = NULL;
+        if (!(ifmt_ctx->streams[i]->codecpar->codec_type == AVMEDIA_TYPE_AUDIO
+                || ifmt_ctx->streams[i]->codecpar->codec_type == AVMEDIA_TYPE_VIDEO))
+            continue;
+
+
+        if (ifmt_ctx->streams[i]->codecpar->codec_type == AVMEDIA_TYPE_VIDEO)
+            filter_spec = "null";       /* passthrough (dummy) filter for video */
+        else
+            filter_spec = "anull";      /* passthrough (dummy) filter for audio */
+
+        ret = init_filter(&filter_ctx[i], stream_ctx[i].dec_ctx,
+                stream_ctx[i].enc_ctx, filter_spec);
+        if (ret)
+            ret;
+    }
+    return 0;
+}
+
+static int filter_encode_write_frame(AVFrame *frame, unsigned int stream_index) {
+    int ret;
+
+    return ret;
+}
+
+static int flush_encoder(unsigned int stream_index) {
+    int ret;
+
+    return ret;
 }
 
 int main(int argc, char *argv[]) {
@@ -138,6 +265,10 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
+    /**
+     * 初始化Input/Output的AVFormatContext, AVCodecContext四个变量。
+     */
+
     if ((ret = open_input_file(argv[1])) < 0)
         goto end;
 
@@ -147,7 +278,68 @@ int main(int argc, char *argv[]) {
     if ((ret = init_filters()) < 0)
         goto end;
 
+    /* read all packets */
+    while (1) {
+        if ((ret = av_read_frame(ifmt_ctx, &packet)) < 0)
+            break;
+        stream_index = packet.stream_index;
+        type = ifmt_ctx->streams[packet.stream_index]->codecpar->codec_type;
+        av_log(NULL, AV_LOG_DEBUG, "Demuxer gave frame of stream_index %u\n",
+                stream_index);
+
+        if (filter_ctx[stream_index].filter_graph) {
+
+        } else {
+            /* remux this frame without reencoding */
+            av_packet_rescale_ts(&packet,
+                    ifmt_ctx->streams[stream_index]->time_base,
+                    ofmt_ctx->streams[stream_index]->time_base);
+
+            ret = av_interleaved_write_frame(ofmt_ctx, &packet);
+            if (ret < 0)
+                goto end;
+        }
+        av_packet_unref(&packet);
+    }
+
+    /* flush filters and encoders */
+    for (i = 0; i < ifmt_ctx->nb_streams; i++) {
+        /* flush filter */
+        if (!filter_ctx[i].filter_graph)
+            continue;
+        ret = filter_encode_write_frame(NULL, i);
+        if (ret < 0) {
+            av_log(NULL, AV_LOG_ERROR, "Flushing filter failed\n");
+            goto end;
+        }
+
+        /* flush encoder */
+        ret = flush_encoder(i);
+        if (ret < 0) {
+            av_log(NULL, AV_LOG_ERROR, "Flushing encoder failed\n");
+            goto end;
+        }
+    }
+
+    av_write_trailer(ofmt_ctx);
 
     end:
     av_packet_unref(&packet);
+    av_frame_free(&frame);
+    for (i = 0; i < ifmt_ctx->nb_streams; i++) {
+        avcodec_free_context(&stream_ctx[i].dec_ctx);
+        if (ofmt_ctx && ofmt_ctx->nb_streams > i && ofmt_ctx->streams[i] && stream_ctx[i].enc_ctx)
+            avcodec_free_context(&stream_ctx[i].enc_ctx);
+        if (filter_ctx && filter_ctx[i].filter_graph)
+            avfilter_graph_free(&filter_ctx[i].filter_graph);
+    }
+    av_free(filter_ctx);
+    av_free(stream_ctx);
+    avformat_close_input(&ifmt_ctx);
+    if (ofmt_ctx && !(ofmt_ctx->oformat->flags & AVFMT_NOFILE))
+        avio_closep(&ofmt_ctx->pb);
+    avformat_free_context(ofmt_ctx);
+    if (ret < 0)
+        av_log(NULL, AV_LOG_ERROR, "Error occurred: %s\n", av_err2str(ret));
+    return ret ? 1 : 0;
 }

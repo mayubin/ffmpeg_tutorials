@@ -221,11 +221,13 @@ avcodec_send_packet函数将将视频数据送到AVPacket中，通过avcodec_rec
 4. `scaling_video.c` 通过sws_scale函数转换视频的尺寸。  
 将生成的的帧图片转换存入到另外的文件中。
 5. `filtering_video.c` 改变视频的尺寸和转置90度从终端输出。  
-和`decode_video.c`相同的处理获取Frame，然后通过avfilter_graph_create_filter构建两个filter，graph的意义还需要后续再分析，最后改变后的Frame从终端输出。
+和`decode_video.c`相同的处理获取Frame，然后通过avfilter_graph_create_filter构建两个filter，函数av_buffersrc_add_frame_flags
+表示输入到filter中，函数av_buffersink_get_frame表示从filter中输出。
 6. `hw_decode.c` 硬件加速。  
 解码过程和`decode_video.c`类似，添加av_hwdevice_ctx_create函数创建AVBufferRef指针。
 7. `demuxing.c` 一种视频格式转换为另外一种视频格式。
 通过输入输出文件的后缀创建相应的Context，转换对应的packet，最终写入到输出文件中。
+8. `transcoding.c` demuxing, decoding, filtering, encoding and muxing 连续操作。
     
 ## 音视频图像协议
 **注: 协议解读是html文件，需要下载下来使用浏览器打开。**  
