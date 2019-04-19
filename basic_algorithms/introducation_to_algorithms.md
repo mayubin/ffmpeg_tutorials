@@ -1,8 +1,10 @@
 # Introduction to Algorithms
 算法导论
 ## Foundations
-
 ### The Role of Algorithms in Computing
+2019.04.20 1-3章计划阅读完成  
+
+
 ### Getting Started
 ### Growth of Functions
 ### Divide-and-Conquer

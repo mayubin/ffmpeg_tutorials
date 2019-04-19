@@ -5,6 +5,7 @@
 #pragma once
 
 #include "private/SkNoncopyable.h"
+#include "private/SkTemplates.h"
 
 class SkColorSpace;
 class SkData;
