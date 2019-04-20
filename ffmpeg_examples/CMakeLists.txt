@@ -10,6 +10,7 @@ set(FFMPEG_EXAMPLES
         animate_webp_encoder
         transcoding
         muxing
+        encode_audio
         )
 
 foreach(TEST ${FFMPEG_EXAMPLES})

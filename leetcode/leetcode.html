@@ -12,6 +12,10 @@
 </head>
 <body>
 
+<div class="fluid-container">
+    <p class="text-danger">红色标记表示没有解决的问题。</p>
+</div>
+
 <ol>
     <li class="text-primary">Two Sum</li>
     <p>Given an array of integers, return indices of the two numbers such that they add up to a specific target.<br>
@@ -35,7 +39,7 @@
     <p>There are two sorted arrays nums1 and nums2 of size m and n respectively. <br>
         Find the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).</p>
     <pre><code>double findMedianSortedArrays(vector&lt;int&gt;& nums1, vector&lt;int&gt;& nums2);</code></pre>
-
+    <p>需要考虑时间复杂度。</p>
 
     <li class="text-warning">Longest Palindromic Substring</li>
     <p>Given a string s, find the longest palindromic substring in s. You may assume that the maximum length of s is 1000.</p>
@@ -47,7 +51,53 @@
         to display this pattern in a fixed font for better legibility)</p>
     <pre><code>string convert(string s, int numRows);</code></pre>
     <p>每一行都会有有两个周期交替出现，每行都会走完一次字符串长度。</p>
+
     <li class="text-dark">Reverse Integer</li>
+    <p>Given a 32-bit signed integer, reverse digits of an integer.</p>
+    <pre><code>int reverse(int x);</code></pre>
+    <p>注意题目的限制，不要使用长整形。</p>
+
+    <li class="text-success">String to Integer (atoi)</li>
+    <p>Implement atoi which converts a string to an integer.</p>
+    <pre><code>int myAtoi(string str);</code></pre>
+    <p>更像是考察if-else语句。</p>
+
+    <li class="text-info">Palindrome Number</li>
+    <p>Determine whether an integer is a palindrome. An integer is a palindrome when it reads the same backward as forward.</p>
+    <pre><code>bool isPalindrome(int x);</code></pre>
+    <p>将数值的一半倒置判断是否相等。</p>
+
+    <li class="text-danger">Regular Expression Matching</li>
+    <p>Given an input string (s) and a pattern (p), implement regular expression matching with support for '.' and '*'.</p>
+    <pre><code>bool isMatch(string s, string p);</code></pre>
+    <p>使用动态规划解决。</p>
+
+    <li class="text-primary">Container With Most Water</li>
+    <pre><code>int maxArea(vector&lt;int&gt;& height);</code></pre>
+    <p>求容纳水的面积，最开始的两端算起。</p>
+
+    <li class="text-success">Integer to Roman</li>
+    <p>Given an integer, convert it to a roman numeral. Input is guaranteed to be within the range from 1 to 3999.</p>
+    <pre><code>string intToRoman(int num);</code></pre>
+    <p>把所有的可能使用数组表示出来，直接用下标获取数组值。</p>
+
+    <li class="text-secondary">Roman to Integer</li>
+    <p>Given a roman numeral, convert it to an integer. Input is guaranteed to be within the range from 1 to 3999.</p>
+    <pre><code>int romanToInt(string s);</code></pre>
+    <p>从后往前开始计算。</p>
+
+    <li class="text-info">Longest Common Prefix</li>
+    <p>Write a function to find the longest common prefix string amongst an array of strings.</p>
+    <pre><code>string longestCommonPrefix(vector&lt;string&gt;& strs);</code></pre>
+    <p>两个for循环比较相同字符。</p>
+
+    <li class="text-primary"></li>
+
+
+    <li class="text-warning">4Sum</li>
+    <p>Given an array nums of n integers and an integer target, are there elements a, b, c, and d in nums such that a + b + c + d = target? Find all unique quadruplets in the array which gives the sum of target.</p>
+    <pre><code>vector&lt;vector&lt;int&gt;&gt; fourSum(vector&lt;int&gt;& nums, int target)</code></pre>
+    <p>有点像分治法，从四个转化到三个，再转化到两个相加。</p>
 </ol>
 
 
