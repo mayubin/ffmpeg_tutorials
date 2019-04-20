@@ -445,9 +445,14 @@ skia_test.cpp   测试入口
 
 ---
 ## Leetcode答案 (C++实现)
-[Leetcode官网](https://leetcode.com/problemset/all/)  答案在[leetcode](leetcode)文件夹。  
+[Leetcode官网](https://leetcode.com/problemset/all/)  
+答案在[leetcode](leetcode)文件夹，都已经经过测试，而且大部分都是最优解。    
 ### Array
+数组非常常见。
 ### Hash Table
+hash = hashfunc(key)  
+index = hash % array_size  
+![Separate chaining with linked lists](res/hash_table.png)
 ### Linked List
 ### Math 
 ### Two Pointers
@@ -471,6 +476,7 @@ skia_test.cpp   测试入口
 ### Segment Tree
 ### Binary Search Tree
 ### Recursion
+程序不断调用本身，传递不同的参数，同时需要有结束条件。
 ### Brainteaser
 ### Memoization
 ### Queue

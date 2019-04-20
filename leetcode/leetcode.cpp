@@ -6,6 +6,7 @@
 #include <unordered_map>
 #include <climits>
 #include <algorithm>
+#include <stack>
 
 using namespace std;
 
@@ -19,6 +20,177 @@ struct ListNode {
 };
 
 
+ListNode *mergeTwoLists(ListNode *l1, ListNode *l2);
+
+// A utility function to find maximum of two integers
+int max(int a, int b) { return (a > b) ? a : b; }
+
+// A utility function to find maximum of three integers
+int max(int a, int b, int c) { return max(max(a, b), c); }
+
+// 0053
+// Find the maximum possible sum in arr[] auch that arr[m] is part of it
+int maxCrossingSum(vector<int> &nums, int l, int m, int h) {
+    // Include elements on left of mid.
+    int sum = 0;
+    int left_sum = INT_MIN;
+    for (int i = m; i >= l; i--) {
+        sum = sum + nums[i];
+        if (sum > left_sum)
+            left_sum = sum;
+    }
+
+    // Include elements on right of mid
+    sum = 0;
+    int right_sum = INT_MIN;
+    for (int i = m + 1; i <= h; i++) {
+        sum = sum + nums[i];
+        if (sum > right_sum)
+            right_sum = sum;
+    }
+
+    // Return sum of elements on left and right of mid
+    return left_sum + right_sum;
+}
+
+// Returns sum of maximum sum subarray in aa[l..h]
+int maxSubArraySum(vector<int> &nums, int l, int h) {
+    // Base Case: Only one element
+    if (l == h)
+        return nums[l];
+
+    // Find middle point
+    int m = (l + h) / 2;
+
+    /* Return maximum of following three possible cases
+       a) Maximum subarray sum in left half
+       b) Maximum subarray sum in right half
+       c) Maximum subarray sum such that the subarray crosses the midpoint */
+    return max(maxSubArraySum(nums, l, m),
+               maxSubArraySum(nums, m + 1, h),
+               maxCrossingSum(nums, l, m, h));
+}
+
+int maxSubArray(vector<int> &nums) {
+    return maxSubArraySum(nums, 0, nums.size() - 1);
+}
+
+// 0024
+ListNode *swapPairs(ListNode *head) {
+    if ((head == nullptr) || head->next == nullptr)
+        return head;
+    ListNode *n = head->next;
+    head->next = swapPairs(head->next->next);
+    n->next = head;
+    return n;
+}
+
+// 0023
+ListNode *mergeKLists(vector<ListNode *> &lists) {
+    if (lists.size() == 0)
+        return nullptr;
+
+    int count = lists.size(), interval = 1;
+
+    while (interval < count) {
+        for (int i = 0; i < count - interval; i += interval * 2)
+            lists[i] = mergeTwoLists(lists[i], lists[i + interval]);
+        interval = interval * 2;
+    }
+    return lists[0];
+}
+
+// 0022
+// remaining left parenthesis(n)
+// the right parenthesis(m) to be added
+void addingParenthesis(vector<string> &v, string str, int n, int m) {
+    if (n == 0 && m == 0) {
+        v.push_back(str);
+        return;
+    }
+    if (m > 0) {
+        addingParenthesis(v, str + ")", n, m - 1);
+    }
+    if (n > 0) {
+        addingParenthesis(v, str + "(", n - 1, m + 1);
+    }
+}
+
+vector<string> generateParenthesis(int n) {
+    vector<string> res;
+    addingParenthesis(res, "", n, 0);
+    return res;
+}
+
+// 0021
+ListNode *mergeTwoLists(ListNode *l1, ListNode *l2) {
+    if (l1 == NULL)
+        return l2;
+    if (l2 == NULL)
+        return l1;
+
+    if (l1->val < l2->val) {
+        l1->next = mergeTwoLists(l1->next, l2);
+        return l1;
+    } else {
+        l2->next = mergeTwoLists(l2->next, l1);
+        return l2;
+    }
+}
+
+// 0020
+bool isValid(string s) {
+    stack<char> parent;
+    for (char &c : s) {
+        switch (c) {
+            case '(':
+            case '{':
+            case '[':
+                parent.push(c);
+                break;
+            case ')':
+                if (parent.empty() || parent.top() != '(')
+                    return false;
+                else
+                    parent.pop();
+                break;
+            case ']':
+                if (parent.empty() || parent.top() != '[')
+                    return false;
+                else
+                    parent.pop();
+                break;
+            case '}':
+                if (parent.empty() || parent.top() != '{')
+                    return false;
+                else
+                    parent.pop();
+                break;
+        }
+    }
+    return parent.empty();
+}
+
+// 0019
+ListNode *removeNthFromEnd(ListNode *head, int n) {
+    ListNode *start = new ListNode(0);
+
+    start->next = head;
+
+    ListNode *fast = start, *slow = start;
+
+    for (int i = 0; i < n; ++i)
+        fast = fast->next;
+
+    while (fast->next != NULL) {
+        fast = fast->next;
+        slow = slow->next;
+    }
+
+    slow->next = slow->next->next;
+
+    return start->next;
+}
 
 // 0018
 vector<vector<int>> fourSum(vector<int> &nums, int target) {

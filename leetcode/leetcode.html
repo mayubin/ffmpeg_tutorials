@@ -12,8 +12,10 @@
 </head>
 <body>
 
-<div class="fluid-container">
+
+<div class="container-fluid">
     <p class="text-danger">红色标记表示没有解决的问题。</p>
+    <p>recursive是程序调用本身，传递不同的参数，iterative是使用for循环的方式。</p>
 </div>
 
 <ol>
@@ -91,13 +93,44 @@
     <pre><code>string longestCommonPrefix(vector&lt;string&gt;& strs);</code></pre>
     <p>两个for循环比较相同字符。</p>
 
-    <li class="text-primary"></li>
 
+    <li class="text-secondary">3Sum</li>
+    <p>固定一个数，移动其它两个数，找到相等的位置。</p>
+
+    <li class="text-info">3Sum Closest</li>
+    <p>类似上面3Sum的例子。</p>
+
+    <li class="text-primary">Letter Combinations of a Phone Number</li>
+    <p>将字符串拆分。</p>
 
     <li class="text-warning">4Sum</li>
     <p>Given an array nums of n integers and an integer target, are there elements a, b, c, and d in nums such that a + b + c + d = target? Find all unique quadruplets in the array which gives the sum of target.</p>
     <pre><code>vector&lt;vector&lt;int&gt;&gt; fourSum(vector&lt;int&gt;& nums, int target)</code></pre>
     <p>有点像分治法，从四个转化到三个，再转化到两个相加。</p>
+
+    <li class="text-success">Remove Nth Node From End of List</li>
+    <p>使用两个指针，先before指针向前移动N个位置，然后before和after一起移动找到倒数第N个位置。</p>
+
+    <li class="">Valid Parentheses</li>
+    <p>堆栈的的执行速度不够快。</p>
+
+
+    <li>Merge Two Sorted Lists</li>
+    <p>使用Recursive的方式更快。</p>
+
+    <li>Generate Parentheses</li>
+    <p>使用迭代不断改变左右的括号个数。</p>
+
+    <li>Merge k Sorted Lists</li>
+    <p>不断地进行两个合并。</p>
+
+    <li>Swap Nodes in Pairs</li>
+    <p>使用迭代运行太慢。</p>
+
+    <li>0053 Maximum Subarray</li>
+    <p>Given an integer array nums, find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.</p>
+    <pre><code>int maxSubArray(vector<int>& nums);</code></pre>
+    <p>使用divide and conquer方式。</p>
 </ol>
 
 
