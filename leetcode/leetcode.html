@@ -95,12 +95,18 @@
 
 
     <li class="text-secondary">3Sum</li>
+    <p>Given an array nums of n integers, are there elements a, b, c in nums such that a + b + c = 0? Find all unique triplets in the array which gives the sum of zero.</p>
+    <pre><code>vector&lt;vector&lt;int&gt;&gt; threeSum(vector&lt;int&gt;& nums);</code></pre>
     <p>固定一个数，移动其它两个数，找到相等的位置。</p>
 
     <li class="text-info">3Sum Closest</li>
+    <p>Given an array nums of n integers and an integer target, find three integers in nums such that the sum is closest to target. Return the sum of the three integers. You may assume that each input would have exactly one solution.</p>
+    <pre><code>int threeSumClosest(vector&lt;int&gt;& nums, int target);</code></pre>
     <p>类似上面3Sum的例子。</p>
 
     <li class="text-primary">Letter Combinations of a Phone Number</li>
+    <p>Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent.</p>
+    <pre><code>vector&lt;string&gt; letterCombinations(string digits);</code></pre>
     <p>将字符串拆分。</p>
 
     <li class="text-warning">4Sum</li>
@@ -109,17 +115,23 @@
     <p>有点像分治法，从四个转化到三个，再转化到两个相加。</p>
 
     <li class="text-success">Remove Nth Node From End of List</li>
-    <p></p>
+    <p>Given a linked list, remove the n-th node from the end of list and return its head.</p>
+    <pre><code>ListNode* removeNthFromEnd(ListNode* head, int n);</code></pre>
     <p>使用两个指针，先before指针向前移动N个位置，然后before和after一起移动找到倒数第N个位置。</p>
 
     <li class="">Valid Parentheses</li>
+    <p>Given a string containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.</p>
+    <pre><code>bool isValid(string s);</code></pre>
     <p>堆栈的的执行速度不够快。</p>
 
 
     <li>Merge Two Sorted Lists</li>
+    <p>Merge two sorted linked lists and return it as a new list. The new list should be made by splicing together the nodes of the first two lists.</p>
+    <pre><code>ListNode* mergeTwoLists(ListNode* l1, ListNode* l2);</code></pre>
     <p>使用Recursive的方式更快。</p>
 
     <li>Generate Parentheses</li>
+    <p></p>
     <p>使用迭代不断改变左右的括号个数。</p>
 
     <li>Merge k Sorted Lists</li>
@@ -128,9 +140,36 @@
     <li>Swap Nodes in Pairs</li>
     <p>使用迭代运行太慢。</p>
 
+    <li>Reverse Nodes in k-Group</li>
+    <p>current在交换时一直都没有变，申明pre_header是因为首地址会发生变化。</p>
+
+    <li>Remove Duplicates from Sorted Array</li>
+    <p>Given a sorted array nums, remove the duplicates in-place such that each element appear only once and return the new length.</p>
+    <pre><code>int removeDuplicates(vector&lt;int&gt;& nums);</code></pre>
+    <p>使用count计算重复的数组。</p>
+
+    <li></li>
+    <p></p>
+    <pre><code>int removeElement(vector&lt;int&gt;& nums, int val);</code></pre>
+    <p>移除指定元素之间的所有值。</p>
+
+    <li>Implement strStr()</li>
+    <p>Return the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.</p>
+    <pre><code>int strStr(string haystack, string needle);</code></pre>
+    <p>brute-force暴力攻击法，也可以使用KMP算法进行查找。</p>
+
+    <li>Divide Two Integers</li>
+    <p>Given two integers dividend (被除数) and divisor (除数), divide two integers without using multiplication, division and mod operator.</p>
+    <pre><code>int divide(int dividend, int divisor);</code></pre>
+    <p>使用减法操作。</p>
+
+    <li class="text-danger">Substring with Concatenation of All Words</li>
+
+
+
     <li>0053 Maximum Subarray</li>
     <p>Given an integer array nums, find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.</p>
-    <pre><code>int maxSubArray(vector<int>& nums);</code></pre>
+    <pre><code>int maxSubArray(vector&lt;int&gt;& nums);</code></pre>
     <p>使用divide and conquer方式。</p>
 </ol>
 

@@ -75,6 +75,102 @@ int maxSubArray(vector<int> &nums) {
     return maxSubArraySum(nums, 0, nums.size() - 1);
 }
 
+// 0030
+vector<int> findSubstring(string s, vector<string>& words) {
+
+}
+
+// 0029
+int divide(int dividend, int divisor) {
+    if (dividend == INT_MIN && divisor == -1)
+        return INT_MAX;
+
+    long dvd = labs(dividend), dvs = labs(divisor), ans = 0;
+    int sign = dividend > 0 ^ divisor > 0 ? -1 : 1;
+
+    while (dvd >= dvs) {
+        long temp = dvs, m = 1;
+        while (temp << 1 <= dvd) {
+            temp <<=1;
+            m <<= 1;
+        }
+        dvd -= temp;
+        ans += m;
+    }
+    return sign > 0 ? ans : -ans;
+}
+
+// 0028
+int strStr(string haystack, string needle) {
+    int l1 = haystack.length(), l2 = needle.length();
+    if (l1 < l2) {
+        return -1;
+    } else if (l2 == 0)
+        return 0;
+
+    int threshold = l1 - l2;
+    for (int i = 0; i <= threshold; ++i) {
+        if (!(haystack.substr(i, l2)).compare(needle))
+            return i;
+    }
+    return -1;
+}
+
+// 0027
+int removeElement(vector<int>& nums, int val) {
+    int cnt = 0;
+    for (int i = 0; i < nums.size(); ++i) {
+        if (nums[i] == val) {
+            cnt++;
+        } else {
+            nums[i-cnt] = nums[i];
+        }
+    }
+    return nums.size() - cnt;
+}
+
+// 0026
+int removeDuplicates(vector<int>& nums) {
+    int count = 0;
+    for (int i = 1; i < nums.size(); i++) {
+        if (nums[i] == nums[i-1])
+            count++;
+        else
+            nums[i - count] = nums[i];
+    }
+    return nums.size() - count;
+}
+
+// 0025
+ListNode* reverseKGroup(ListNode* head, int k) {
+    if (head == NULL || k == 1)
+        return head;
+
+    int num = 0;
+
+    ListNode *pre_header = new ListNode(-1);
+    pre_header->next = head;
+
+    ListNode *cur = pre_header, *nex, *pre = pre_header;
+
+    while (cur = cur->next)
+        num++;
+
+    while (num >= k) {
+        cur = pre->next;
+        nex = cur->next;
+        for (int i = 1; i < k; i++) {
+            cur->next = nex->next;
+            nex->next = pre->next;
+            pre->next = nex;
+            nex = cur->next;
+        }
+        pre = cur;
+        num -= k;
+    }
+    return pre_header->next;
+}
+
 // 0024
 ListNode *swapPairs(ListNode *head) {
     if ((head == nullptr) || head->next == nullptr)

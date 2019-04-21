@@ -11,6 +11,7 @@ set(FFMPEG_EXAMPLES
         transcoding
         muxing
         encode_audio
+        transcode_aac
         )
 
 foreach(TEST ${FFMPEG_EXAMPLES})

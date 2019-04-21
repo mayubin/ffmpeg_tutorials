@@ -237,6 +237,7 @@ avcodec_send_packet函数将将视频数据送到AVPacket中，通过avcodec_rec
 7. `demuxing.c` 一种视频格式转换为另外一种视频格式。
 通过输入输出文件的后缀创建相应的Context，转换对应的packet，最终写入到输出文件中。
 8. `transcoding.c` demuxing, decoding, filtering, encoding and muxing 连续操作。
+
     
 ## 音视频图像协议
 **注: 协议解读是html文件，需要下载下来使用浏览器打开。**  
@@ -384,9 +385,12 @@ SFML的安装`sudo apt-get install libsfml-dev`
 ## 多媒体算法 (media_algorithms)
 ### CRC校验
 在需要传递的数据后面加上一串数据，这串数据是对需要传递的数据进行计算得到的，通过比较加上的数据验证传递的数据是否正确。  
-[crc实现](basic_algorithms/crc_impl)
+[crc实现](media_algorithms/crc_impl)
 详细的解释查看  
 [A Painless Guide to CRC Error Detection Algorithms](http://ross.net/crc/download/crc_v3.txt)
+
+### 子字符串查找，KMP算法
+
 
 ### pngquant PNG压缩算法  (未完成)
 
