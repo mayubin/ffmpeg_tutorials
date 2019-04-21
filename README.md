@@ -7,24 +7,33 @@
 集成开发环境 CLion 2018.3.4  
 管理 CMake
   
-邮件讨论  wangrl2016@gmail.com
-
-多运动，不要熬夜，保持好习惯。
+邮件讨论  wangrl2016@gmail.com    
 
 ## C语言进阶
-主要讲指针，内存管理，和文件读写操作。因为音视频很多都是以文件的形式存在，需要手动管理内存，指针又是必不可少的。
-参考《Pointers On C》写的部分代码示例。
+主要讲指针，内存管理，和文件读写等C高级操作。  
+参考《Pointers On C》写的部分代码示例。  
 ### 01. A Quick Start
-`rearrange_characters.c` 字符串的输入输出处理。  
+字符串的输入输出处理。   
 
-跳过语法，函数，数组，指针基础章节。  
+*注：跳过语法，函数，数组，指针基础章节。*  
 
 ### 02. Structures and Unions
 主要讲结构体，初始化，和结构体指针。
 
 ### 03. Dynamic Memory Allocation
 分配`void* malloc(size_t size);`  
-释放`void free(void *pointer);`
+释放`void free(void *pointer);`  
+
+### 04. Using Structures and Pointers
+通过链表来介绍结构体和指针知识。  
+如果需要修改指针的指向，需要传递双重指针，因为指针在函数中也是按值传递。  
+
+
+
+
+--- 
+
+
   
 
 
@@ -37,8 +46,8 @@
 2. ./configure
 	进行配置，可以通过`./configure --help`进行查看。  
 	`--enable-shared`编译动态库。
-3. `make` && `sudo make install`
-　　头文件在/usr/local/include/目录下面，生成库文件在/usr/local/lib/目录下面。 
+3. `make` && `sudo make install`  
+头文件在/usr/local/include/目录下面，生成库文件在/usr/local/lib/目录下面。 
 
 ## FFmpeg概述
 主要库文件  
@@ -273,8 +282,8 @@ PNG数据流由一系列的chunks构造，重要的四个
 ## FFmpeg源码分析
 
 ## C++语言进阶
-示例参考[cppreference官网](https://en.cppreference.com/w/)
-构造器
+示例参考[cppreference官网](https://en.cppreference.com/w/)  
+## 构造器
 ### General utilities library
 #### Smart pointers and allocators 智能指针
 `unique_ptr_test.cpp` 通过make_unique创建对象，通过move进行对象的转移，只允许一个指针拥有该对象实例。  
@@ -445,8 +454,8 @@ skia_test.cpp   测试入口
 
 ---
 ## Leetcode答案 (C++实现)
-[Leetcode官网](https://leetcode.com/problemset/all/)  
-答案在[leetcode](leetcode)文件夹，都已经经过测试，而且大部分都是最优解。    
+[Leetcode官网](https://leetcode.com/problemset/all/)的答案在[leetcode](leetcode)文件夹。  
+都已经通过测试，而且大部分都是最优解，结合算法导论会理解更深刻。    
 ### Array
 数组非常常见。
 ### Hash Table

@@ -5,6 +5,15 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+/**
+ * Function called by 'qsort' to compare integer values.
+ */
+int compare_integers(void const *a, void const *b) {
+    register int const *pa = a;
+    register int const *pb = b;
+    return *pa > *pb ? 1 : (*pa < *pb ? -1 : 0);
+}
+
 int main(int argc, char *argv[]) {
 
     int *array;
@@ -32,15 +41,29 @@ int main(int argc, char *argv[]) {
     /**
      * Read the numbers.
      */
+    printf("? ");
     for (i = 0; i < n_values; i++) {
-        printf("? ");
         if (scanf("%d", array + i) != 1) {
             printf("Error reading value #%d\n", i);
             exit(EXIT_FAILURE);
         }
     }
 
+    /**
+     * Sort the values.
+     */
+    qsort(array, n_values, sizeof(int), compare_integers);
 
+    /**
+     * Print them out.
+     */
+    for (i = 0; i < n_values; i += 1)
+        printf("%d\n", array[i]);
 
-    return 0;
+    /**
+     * Free the memory and exit.
+     */
+    free(array);
+
+    return EXIT_SUCCESS;
 }

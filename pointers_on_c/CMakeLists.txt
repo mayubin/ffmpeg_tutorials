@@ -1,9 +1,16 @@
 
 
-add_executable(rearrange_characters 01_a_quick_start/rearrange_characters.c)
+set(C_TESTS
+        01_a_quick_start
+        10_structures_and_unions
+        11_dynamic_memory_allocation
+        sort
+        strdup
+        12_using_structures_and_pointers
+        )
 
-add_executable(structures_and_unions structures_and_unions.c)
+foreach(TEST ${C_TESTS})
+    add_executable(${TEST} ${TEST}.c)
 
-add_executable(dynamic_memory_allocation dynamic_memory_allocation.c)
+endforeach(TEST)
 
-add_executable(sort sort.c)
